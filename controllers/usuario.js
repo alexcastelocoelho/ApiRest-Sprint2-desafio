@@ -6,7 +6,7 @@ module.exports = app => {
         
     })
     app.post('/api', (req,res) => {
-        
+        console.log(req.body)
         res.send('voce esta na rota de Post da Api')
     
     })
