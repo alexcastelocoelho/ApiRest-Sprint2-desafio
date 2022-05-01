@@ -6,11 +6,11 @@ const bodyparser = require('body-parser')
 module.exports = () => {
     const app = express()
 
-    app.use(bodyparser.urlencoded({extended: true}))
+    app.use(express.urlencoded({extended: true}))
     app.use(bodyparser.json())
     
     consign()
-        .include('controllers')
+        .include("controllers")
         .into(app)
      
      return app   

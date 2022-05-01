@@ -1,14 +1,40 @@
 
+const User = require('../models/user')
+
 module.exports = app => {
     
-    app.get('/api', (req,res) => {
-        res.send('voce está na rota de Get da Api')
+    app.get('/api/v1/user', (req,res) => {
+        User.listaUsuarios(res)
         
     })
-    app.post('/api', (req,res) => {
-        console.log(req.body)
-        res.send('voce esta na rota de Post da Api')
-    
+
+    app.get('/api/v1/user/:id', (req,res) => {
+        const id = parseInt(req.params.id)
+        
+        User.buscaPorId(id, res)
+        
     })
     
+    app.post('/api/v1/user', (req,res) => {
+        const user = req.body
+
+        User.adicionaUsuario(user, res)
+    })
+    
+    app.put('/api/v1/user/:id', (req,res) => {
+        const id = parseInt(req.params.id)
+
+        const valores = req.body
+    
+        User.alteraUsuario(id, valores, res)
+    })
+
+    app.delete('/api/v1/user/:id', (req,res) => {
+        const id = parseInt(req.params.id)
+
+        User.deletaUsuario(id, res)
+    })
+
+
+       
 }
