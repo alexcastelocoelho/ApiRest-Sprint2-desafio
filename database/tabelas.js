@@ -4,6 +4,8 @@ class Tabelas {
 
        this.criarUsuario()
 
+       this.criarTarefa()
+
     }
       
     criarUsuario() {
@@ -15,6 +17,18 @@ class Tabelas {
                 console.log('tabela usuario criada ')
             }
         }) 
+    }
+
+    criarTarefa() {
+        const sql = 'CREATE TABLE IF NOT EXISTS tarefa (description varchar(150) NOT NULL, date datetime NOT NULL, user int, CONSTRAINT fk_USTA FOREIGN KEY (user) REFERENCES usuario (id)  )'
+
+        this.conexao.query(sql, erro => {
+            if(erro) {
+                console.log(erro)
+            } else {
+                console.log('tabela tarefa criada ')
+            }
+        })
     }
 
     
