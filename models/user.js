@@ -1,15 +1,25 @@
 const conexao = require('../database/conexao')
 
+const moment = require('moment')
+
 class User {
     
     adicionaUsuario(user, res) {
+        
+        const birthDate = moment(user.birthDate, 'DD/MM/YYYY').format('YYYY-MM-DD')
+        
+        const body = {...user, birthDate}
+        
         const sql = 'INSERT INTO usuario SET ?'
-
-        conexao.query(sql, user, (erro, resultados) => {
-           if(erro) {
+        
+        conexao.query(sql, body, (erro, resultados) => {
+       
+            if(erro) {
                res.status(400).json(erro)
            } else {
+               
                res.status(201).json(resultados)
+              
            }
         })
     }
@@ -46,7 +56,7 @@ class User {
 
         conexao.query(sql, [valores,id], (erro,resultados) => {
             if(erro) {
-                res.status(400).json(erro)
+                res.status(404).json(erro)
             } else {
                 res.status(200).json(resultados)
             }
