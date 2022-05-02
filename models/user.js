@@ -7,22 +7,48 @@ class User {
     adicionaUsuario(user, res) {
         
         const birthDate = moment(user.birthDate, 'DD/MM/YYYY').format('YYYY-MM-DD')
+        const senhavalida = user.password.length >= 6
+        const cpfvalido = /^\d{3}\.\d{3}\.\d{3}\-\d{2}$/.test(user.cpf )
+         
+        const validando = [
+            {
+                nome: 'password',
+                valido:  senhavalida,
+                mensagem: 'senha precisa de pelo menos 6 digitos'
+            },
+            {
+                nome: 'cpf',
+                valido: cpfvalido,
+                mensagem: 'cpi invalido, use o formato xxx.xxx.xxx-xx'
+            }
+        ]
+
+        const erros = validando.filter(teste => !teste.valido)
+        const existemerros = erros.length
+
+        if(existemerros) {
+            res.status(400).json(erros)
+        } else {
+
+            const body = {...user, birthDate}
+            
+            const sql = 'INSERT INTO usuario SET ?'
+            
+            conexao.query(sql, body, (erro, resultados) => {
+           
+                if(erro) {
+                   res.status(400).json(erro)
+               } else {
+                   res.status(201).json(resultados)
+                }
+            })
+        }
+
         
-        const body = {...user, birthDate}
-        
-        const sql = 'INSERT INTO usuario SET ?'
-        
-        conexao.query(sql, body, (erro, resultados) => {
-       
-            if(erro) {
-               res.status(400).json(erro)
-           } else {
-               
-               res.status(201).json(resultados)
-              
-           }
-        })
     }
+
+               
+              
 
    listaUsuarios(res) {
         const sql = 'SELECT * FROM usuario'
