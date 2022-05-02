@@ -20,7 +20,7 @@ class Tabelas {
     }
 
     criarTarefa() {
-        const sql = 'CREATE TABLE IF NOT EXISTS tarefa (description varchar(150) NOT NULL, date datetime NOT NULL, id int NOT NULL AUTO_INCREMENT, CONSTRAINT fk_USTA FOREIGN KEY (id) REFERENCES usuario (id)  )'
+        const sql = 'CREATE TABLE IF NOT EXISTS tarefa (description varchar(150) NOT NULL, date datetime NOT NULL, id int NOT NULL AUTO_INCREMENT, user int , PRIMARY KEY(id), CONSTRAINT fk_USTA FOREIGN KEY (user) REFERENCES usuario (id)  )'
 
         this.conexao.query(sql, erro => {
             if(erro) {

@@ -4,7 +4,7 @@ class Task {
 
     adicionaTarefa(task, res) {
         
-        const date = moment(task.date, 'DD/MM/YYYY').format('YYYY-MM-DD HH:mm:ss')
+        const date = moment(task.date, 'DD-MM-YYYY').format('YYYY-MM-DD HH:mm:ss')
         
         const body = {...task, date}
         const sql = 'INSERT INTO tarefa SET ?'
